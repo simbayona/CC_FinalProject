@@ -8,14 +8,19 @@ function setup(){
   roundedOuter = new Outer("round");
   circularOuter = new Outer("circle");
   squareOuter = new Outer("square");
+  roundedInner = new Inner("round");
 }
 
 function draw(){
   noStroke();
-  roundedOuter.resize(.5);
+  roundedOuter.resize(1);
   roundedOuter.display();
+  //circularOuter.resize(1):
   //circularOuter.display();
+  //squareOuter.resize(1);
   //squareOuter.display();
+  roundedInner.resize(1);
+  roundedInner.display();
 }
 
 function mousePressed(){
