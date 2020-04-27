@@ -1,15 +1,42 @@
 class Outer {
- public let x;
- public let y;
 
  constructor(type, size){
- this.type = type;
- this.size = size;
+ this.type = type; // this type variable lets me chose which one of the outer shapes I want to have
+ this.size = size; // this size variable will let the user pick how big they want the outer limit to be
+ this.outerWidth = 400 * this.size; // these four are just some math to make sure the circles and squares are the correct sizes and in the correct spot
+ this.outerHeight = 400 * this.size;
+ this.x = (width/2) - (this.outerWidth/2);
+ this.y = (height/2) - (this.outerHeight/2);
  }
 
  display(){
+  if(this.type == "round"){
+    this.roundOuter();
+  }
+  if(this.type == "circle"){
+    this.circleOuter();
+  }
+  if(this.type == "square"){
+    this.squareOuter();
+  }
+ }
 
-  fill(252,255,219);
-  rect(width/2,height/2,100,100.20);
+ roundOuter(){
+   fill("#B1FFA4");
+   rect(this.x,this.y,this.outerWidth,this.outerHeight,50);
+   fill(127);
+   rect(this.x+10,this.y+10,this.outerWidth-20,this.outerHeight-20,50);
+ }
+ circleOuter(){
+   fill("#B1FFA4");
+   ellipse(width/2,height/2,this.outerWidth,this.outerHeight);
+   fill(127);
+   ellipse(width/2,height/2,this.outerWidth-15,this.outerHeight-15);
+ }
+ squareOuter(){
+   fill("#B1FFA4");
+   rect(this.x,this.y,this.outerWidth,this.outerHeight);
+   fill(127);
+   rect(this.x+10,this.y+10,this.outerWidth-20,this.outerHeight-20);
  }
 }
