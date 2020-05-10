@@ -1,4 +1,5 @@
 let spinner = 0
+let rotator = 0
 
 
 
@@ -6,28 +7,24 @@ function setup(){
   createCanvas(700,700);
   background(127);
   angleMode(DEGREES);
-  roundedOuter = new Outer("round");
-  circularOuter = new Outer("circle");
-  squareOuter = new Outer("square");
-  roundedInner = new Inner("round");
-  circleInner = new Inner("circle");
+  innerShape = new Inner();
+  drawingHoles = new Holes();
+  drawingHoles.resize(4);
+  outerBorder = new Outer();
 }
 
 function draw(){
   noStroke();
   if(keyIsDown(ENTER)){
     spinner+=8;
+    rotator+=3;
   }
-  roundedOuter.resize(1);
-  roundedOuter.display();
-  //circularOuter.resize(1):
-  //circularOuter.display();
-  //squareOuter.resize(1);
-  //squareOuter.display();
-  roundedInner.resize(1);
-  roundedInner.display();
-  // circleInner.resize(1);
-  // circleInner.display();
+  outerBorder.changeType("circle");
+  outerBorder.resize(1);
+  outerBorder.display();
+  innerShape.changeType("circle");
+  innerShape.resize(1);
+  innerShape.display();
 }
 
 function mousePressed(){

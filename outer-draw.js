@@ -1,7 +1,6 @@
 class Outer {
 
- constructor(type){
- this.type = type; // this type variable lets me chose which one of the outer shapes I want to have
+ constructor(){
  }
 
  display(){ // display just chooses which one of the drawer methods to pick from depending on the type
@@ -23,6 +22,9 @@ class Outer {
    this.outerHeight = 400 * this.size; // the first two determine the size based on a predetermined max
    this.x = (width/2) - (this.outerWidth/2); // these two help for centering anything based on the rect function
    this.y = (height/2) - (this.outerHeight/2);
+ }
+ changeType(new_type){
+   this.type = new_type;
  }
  roundOuter(){
    this.placement();
