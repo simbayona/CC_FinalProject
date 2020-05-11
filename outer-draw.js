@@ -26,13 +26,13 @@ class Outer {
  changeType(new_type){
    this.type = new_type;
  }
- // roundOuter(){
- //   this.placement();
- //   fill("#B1FFA4");
- //   rect(this.x,this.y,this.outerWidth,this.outerHeight,50);
- //   fill(127);
- //   rect(this.x+10,this.y+10,this.outerWidth-20,this.outerHeight-20,50);
- // }
+ roundOuter(){ // original setup for a rounded square border
+   this.placement();
+   fill("#B1FFA4");
+   rect(this.x,this.y,this.outerWidth,this.outerHeight,50);
+   fill(127);
+   rect(this.x+10,this.y+10,this.outerWidth-20,this.outerHeight-20,50);
+ }
  circleOuter(){
    this.placement();
    // fill("#B1FFA4");
@@ -42,11 +42,11 @@ class Outer {
    fill(127);
    ellipse((width/2),(height/2),this.outerWidth-15,this.outerHeight-15);
  }
-//  squareOuter(){
-//    this.placement();
-//    fill("#B1FFA4");
-//    rect(this.x,this.y,this.outerWidth,this.outerHeight);
-//    fill(127);
-//    rect(this.x+10,this.y+10,this.outerWidth-20,this.outerHeight-20);
-//  }
+ squareOuter (){ //original setup for completely square outerborder
+   this.placement();
+   fill("#B1FFA4");
+   rect(this.x,this.y,this.outerWidth,this.outerHeight);
+   fill(127);
+   rect(this.x+10,this.y+10,this.outerWidth-20,this.outerHeight-20);
+ }
 }

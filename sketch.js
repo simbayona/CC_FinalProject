@@ -18,8 +18,9 @@ function setup(){
   createCanvas(1100,700);
   background(127);
   angleMode(DEGREES);
-  outerBorder = new Outer();
-  innerShape = new Inner();
+  outerBorder = new Outer(); // creating the outerborder
+  innerShape = new Inner(); // creating the innershape
+  // making all the holes
   drawingHoles0 = new Holes();
   drawingHoles0.resize(4);
   drawingHoles1 = new Holes();
@@ -53,20 +54,22 @@ function setup(){
 function draw(){
   background(127);
   noStroke();
+  // giving each of the sliders a variable to determine
   let innerSize = sliderInner.value();
   let outerSize = sliderOuter.value();
   let drawer = sliderSelector.value();
   if(keyIsDown(ENTER)){
-    spinner+=8;
-    rotator+=3;
+    spinner+=8; // spinner determines how fast the innercircle spins about its own axis
+    rotator+=3; // rotator determines how fast the innercircle goes around the outer border
   }
-  outerBorder.changeType("circle");
-  outerBorder.resize(outerSize);
+  outerBorder.changeType("circle"); // origiinally i wanted different shapes for the outerborder but it becamse too difficult to have different shape roll on it
+   // at least this way, if I eventually figure it out, it won't be difficult to change between the shapes
+  outerBorder.resize(outerSize); // this takes in the slider's input and multiplies the size of the outer border by that value
   outerBorder.display();
-  innerShape.changeType("circle");
+  innerShape.changeType("circle"); // same for the inner circle
   innerShape.resize(innerSize);
   innerShape.display();
-  push();
+  push(); // the matrix matches the one in innerShape so that the holes will stay in the same spot with respect ot each other and the circle
   translate(width/2,height/2);
   translate(innerShape.x,innerShape.y);
   rotate(spinner);
@@ -81,46 +84,43 @@ function draw(){
   drawingHoles7.display(0,-20,127);
   drawingHoles8.display(8,-22,127);
   pop();
-  colorsPallete();
+  colorsPallete(); // this function does all of the creating the pallete to the right and also changing the stroke color so that the line that is drawn is the matching color
   strokeWeight(5);
   stroke(0);
-  if(drawer == 0){
-    mathy(drawingHoles0.xpos,drawingHoles0.ypos);
-  } if(drawer==1){
-    mathy(drawingHoles1.xpos,drawingHoles1.ypos);
-  } if(drawer==2){
-    mathy(drawingHoles2.xpos,drawingHoles2.ypos);
-  } if(drawer==3){
-    mathy(drawingHoles3.xpos,drawingHoles3.ypos);
-  } if(drawer==4){
-    mathy(drawingHoles4.xpos,drawingHoles4.ypos);
-  } if(drawer==5){
-    mathy(drawingHoles5.xpos,drawingHoles5.ypos);
-  } if(drawer==6){
-    mathy(drawingHoles6.xpos,drawingHoles6.ypos);
-  } if(drawer==7){
-    mathy(drawingHoles7.xpos,drawingHoles7.ypos);
-  } if(drawer==8){
-    mathy(drawingHoles8.xpos,drawingHoles8.ypos);
-  }
+  holeSelector(drawer); // this function  chooses which whole and highlights it briefly
   fill("#B1FFA4");
-  lineColor.setAlpha(opacity);
+  lineColor.setAlpha(opacity); // this changes the opacity of the line so that it won't show up all the time
   rect(10,550,200,100); // on and off toggle button
   stroke(lineColor); // setting the stroke to the color that is clicked on
-  if(opacity==255){
-    linePoints[i] = createVector(actX,actY); // drawing the line
+  if(opacity==255){ // this is to make sure the line is only drawn when it should be visible
+    linePoints[i] = createVector(actX,actY); // drawing the line by taking an array of the actual x and y coordinates produced by holeSelector()
     if(i>0){
-      for(let j =1; j<linePoints.length-1; j++){
+      for(let j =1; j<linePoints.length-1; j++){ // iterates through the vectors of the array and drawing a line between them
         line(linePoints[j].x,linePoints[j].y,linePoints[j+1].x,linePoints[j+1].y);
       }
     }
   i += 1;
   }
+  // all the text
+  fill(0);
+  noStroke();
+  textSize(32);
+  textAlign(CENTER);
+  text("Inner Size",855,90,210,50);
+  text("Border Size",855,290,210,50);
+  text("Hole Select",855,490,210,50);
+  textAlign(CENTER,CENTER);
+  if(opacity==0){ // using the opacity to swap which text is shown
+    text("Start",10,550,200,100);
+  }
+  if(opacity==255){
+    text("Stop",10,550,200,100);
+  }
 }
 
 
 function mousePressed(){
-  console.log(mouseX,mouseY); // position checker
+  //console.log(mouseX,mouseY); // position checker
   //checking to see if the mouse is selecting a color
   clicker(10,70,color(0,0,0)); //shades
   clicker(60,70,color(85,85,85));
@@ -158,7 +158,7 @@ function mousePressed(){
   clicker(60,470,color(31,148,111));
   clicker(110,470,color(51,245,184));
   clicker(160,470,color(182,227,213));
-  if((mouseX>10)&(mouseX<210)&(mouseY>550)&(mouseY<650)){
+  if((mouseX>10)&(mouseX<210)&(mouseY>550)&(mouseY<650)){ // this checks to see if the little on and off button has been pressed to change th opacity of the line
     if(opacity == 0){
       opacity = 255;
     } else{
@@ -167,7 +167,7 @@ function mousePressed(){
   }
 
 }
-function mathy(x,y){ // this math is done to revers all of matrix transformations to find the x,y coordinates of any of the holes
+function mathy(x,y){ // this math is done to revers all of matrix transformations to find the actual x,y coordinates of any of the holes
   x = x * (innerShape.size);
   y = y * (innerShape.size);
   hyp = sqrt(pow(x,2) + pow(y,2));
@@ -190,7 +190,7 @@ function colorSquare(x,y,color){
   fill(color);
   rect(x,y,50,50);
 }
-function colorsPallete(){
+function colorsPallete(){ // function to make the color chooser on the right actually work
   noFill();
   strokeWeight(1);
   stroke(0);
@@ -248,5 +248,106 @@ function clicker(lowX,lowY,color){
   if((mouseX>lowX)&(mouseX<(lowX+50))&(mouseY>lowY)&(mouseY<(lowY+50))){
     lineColor = color;
   }
-
+}
+function holeSelector(drawer){  // this function picks which one of the holes is going to be drawn with and highlights it in the correct color for a fram
+  if(drawer == 0){
+    mathy(drawingHoles0.xpos,drawingHoles0.ypos);
+    push();
+    strokeWeight(4);
+    stroke(lineColor);
+    translate(width/2,height/2);
+    translate(innerShape.x,innerShape.y);
+    rotate(spinner);
+    scale(innerShape.size);
+    drawingHoles0.display(0,0,127);
+    pop();
+  } if(drawer==1){
+    mathy(drawingHoles1.xpos,drawingHoles1.ypos);
+    push();
+    strokeWeight(4);
+    stroke(lineColor);
+    translate(width/2,height/2);
+    translate(innerShape.x,innerShape.y);
+    rotate(spinner);
+    scale(innerShape.size);
+    drawingHoles1.display(4,4,127);
+    pop();
+  } if(drawer==2){
+    mathy(drawingHoles2.xpos,drawingHoles2.ypos);
+    push();
+    strokeWeight(4);
+    stroke(lineColor);
+    translate(width/2,height/2);
+    translate(innerShape.x,innerShape.y);
+    rotate(spinner);
+    scale(innerShape.size);
+    drawingHoles2.display(-1,8,127);
+    pop();
+  } if(drawer==3){
+    mathy(drawingHoles3.xpos,drawingHoles3.ypos);
+    push();
+    strokeWeight(4);
+    stroke(lineColor);
+    translate(width/2,height/2);
+    translate(innerShape.x,innerShape.y);
+    rotate(spinner);
+    scale(innerShape.size);
+    drawingHoles3.display(-6,6,127);
+    pop();
+  } if(drawer==4){
+    mathy(drawingHoles4.xpos,drawingHoles4.ypos);
+    push();
+    strokeWeight(4);
+    stroke(lineColor);
+    translate(width/2,height/2);
+    translate(innerShape.x,innerShape.y);
+    rotate(spinner);
+    scale(innerShape.size);
+    drawingHoles4.display(-10,0,127);
+    pop();
+  } if(drawer==5){
+    mathy(drawingHoles5.xpos,drawingHoles5.ypos);
+    push();
+    strokeWeight(4);
+    stroke(lineColor);
+    translate(width/2,height/2);
+    translate(innerShape.x,innerShape.y);
+    rotate(spinner);
+    scale(innerShape.size);
+    drawingHoles5.display(-9,-9,127);
+    pop(); //                                            its super ugly i know
+  } if(drawer==6){
+    mathy(drawingHoles6.xpos,drawingHoles6.ypos);
+    push();
+    strokeWeight(4);
+    stroke(lineColor);
+    translate(width/2,height/2);
+    translate(innerShape.x,innerShape.y);
+    rotate(spinner);
+    scale(innerShape.size);
+    drawingHoles6.display(-5,-15,127);
+    pop();
+  } if(drawer==7){
+    mathy(drawingHoles7.xpos,drawingHoles7.ypos);
+    push();
+    strokeWeight(4);
+    stroke(lineColor);
+    translate(width/2,height/2);
+    translate(innerShape.x,innerShape.y);
+    rotate(spinner);
+    scale(innerShape.size);
+    drawingHoles7.display(0,-20,127);
+    pop();
+  } if(drawer==8){
+    mathy(drawingHoles8.xpos,drawingHoles8.ypos);
+    push();
+    strokeWeight(4);
+    stroke(lineColor);
+    translate(width/2,height/2);
+    translate(innerShape.x,innerShape.y);
+    rotate(spinner);
+    scale(innerShape.size);
+    drawingHoles8.display(8,-22,127);
+    pop();
+  }
 }
