@@ -11,11 +11,6 @@ class Holes{
     this.ypos = y;
 
   }
-  draw(color){
-  push();
-  this.display(this.xpos,this.ypos,color);
-  pop();
-  }
   resize(new_size){
     this.size = new_size;
   }

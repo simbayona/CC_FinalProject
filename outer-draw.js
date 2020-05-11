@@ -35,7 +35,9 @@ class Outer {
  }
  circleOuter(){
    this.placement();
-   fill("#B1FFA4");
+   // fill("#B1FFA4");
+   noFill();
+   stroke("#B1FFA4");
    ellipse(width/2,height/2,this.outerWidth,this.outerHeight);
    fill(127);
    ellipse(width/2,height/2,this.outerWidth-15,this.outerHeight-15);

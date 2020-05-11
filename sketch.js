@@ -4,6 +4,8 @@ let actX = 0;
 let actY = 0;
 let hyp = 0;
 let theta = 0;
+let linePoints = [];
+let i = 0;
 
 
 function setup(){
@@ -42,7 +44,7 @@ function draw(){
   outerBorder.resize(1);
   outerBorder.display();
   innerShape.changeType("circle");
-  innerShape.resize(1);
+  innerShape.resize(2);
   innerShape.display();
   push();
   translate(width/2,height/2);
@@ -58,36 +60,45 @@ function draw(){
   drawingHoles6.display(-5,-15,127);
   drawingHoles7.display(0,-20,127);
   drawingHoles8.display(8,-22,127);
-  mathy(drawingHoles7.xpos,drawingHoles7.ypos);
   pop();
-  fill(255);
-  ellipse(actX,actY,5,5);
+  strokeWeight(5);
+  stroke(244);
+  mathy(drawingHoles7.xpos,drawingHoles7.ypos);
+  linePoints[i] = createVector(actX,actY);
+  if(i>0){
+    for(let j =1; j<linePoints.length-1; j++){
+      //console.log("j=" + j);
+      //onsole.log("length of array = " + linePoints.length);
+      //console.log(linePoints[j].x,linePoints[j].y);
+      line(linePoints[j].x,linePoints[j].y,linePoints[j+1].x,linePoints[j+1].y);
+    }
+  }
+//  console.log("i=" + i);
+  i += 1;
 
 }
+
 
 function mousePressed(){
   console.log(mouseX,mouseY); // position checker
   console.log(spinner);
 }
-function mathy(x,y){
-  x = x * (pow((innerShape.size),-1));
-  y = y * (pow((innerShape.size),-1));
+function mathy(x,y){ // this math is done to revers all of matrix transformations to find the x,y coordinates of any of the holes
+  x = x * (innerShape.size);
+  y = y * (innerShape.size);
   hyp = sqrt(pow(x,2) + pow(y,2));
-  console.log(x,y,hyp);
   if((x==0) & (y<=0)){
     theta = 90
   }else{
   theta = (atan(y/x));
   }
-  if((x<0) || (y<0)){
+  if(x<=0){
     theta = theta + 180;
   }
-  console.log(theta);
   y = hyp * sin(spinner+ theta);
   x = hyp * cos(spinner+ theta);
   x = (x + innerShape.x);
   y = (y + innerShape.y);
   actX = (x + (width/2));
   actY = (y + (height/2));
-  //console.log(actX,actY);
 }
