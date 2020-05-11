@@ -8,9 +8,13 @@ let linePoints = [];
 let i = 0;
 let sliderInner;
 let sliderOuter;
+let sliderSelector;
+let lineColor;
+let opacity = 0;
 
 
 function setup(){
+  lineColor =   color(0,0,0);
   createCanvas(1100,700);
   background(127);
   angleMode(DEGREES);
@@ -34,19 +38,24 @@ function setup(){
   drawingHoles7.resize(4);
   drawingHoles8 = new Holes();
   drawingHoles8.resize(4);
-  sliderInner = createSlider(0,3,1,.1);
+  sliderInner = createSlider(0,3,1,.1); // sliders for the size of the part that spins, the size of the outerborder and which of the 9 holes to choose from
   sliderInner.position(905,125);
   sliderInner.style('width',"100px");
   sliderOuter = createSlider(.5,1.5,1,.1);
   sliderOuter.position(905,325);
   sliderOuter.style('width',"100px");
+  sliderSelector = createSlider(0,8,6,1);
+  sliderSelector.position(905,525);
+  sliderSelector.style("width","100px")
 }
+
 
 function draw(){
   background(127);
   noStroke();
   let innerSize = sliderInner.value();
   let outerSize = sliderOuter.value();
+  let drawer = sliderSelector.value();
   if(keyIsDown(ENTER)){
     spinner+=8;
     rotator+=3;
@@ -72,25 +81,90 @@ function draw(){
   drawingHoles7.display(0,-20,127);
   drawingHoles8.display(8,-22,127);
   pop();
-  colorsPick();
+  colorsPallete();
   strokeWeight(5);
-  stroke(244);
-  mathy(drawingHoles7.xpos,drawingHoles7.ypos);
-  linePoints[i] = createVector(actX,actY);
-  if(i>0){
-    for(let j =1; j<linePoints.length-1; j++){
-      line(linePoints[j].x,linePoints[j].y,linePoints[j+1].x,linePoints[j+1].y);
-    }
+  stroke(0);
+  if(drawer == 0){
+    mathy(drawingHoles0.xpos,drawingHoles0.ypos);
+  } if(drawer==1){
+    mathy(drawingHoles1.xpos,drawingHoles1.ypos);
+  } if(drawer==2){
+    mathy(drawingHoles2.xpos,drawingHoles2.ypos);
+  } if(drawer==3){
+    mathy(drawingHoles3.xpos,drawingHoles3.ypos);
+  } if(drawer==4){
+    mathy(drawingHoles4.xpos,drawingHoles4.ypos);
+  } if(drawer==5){
+    mathy(drawingHoles5.xpos,drawingHoles5.ypos);
+  } if(drawer==6){
+    mathy(drawingHoles6.xpos,drawingHoles6.ypos);
+  } if(drawer==7){
+    mathy(drawingHoles7.xpos,drawingHoles7.ypos);
+  } if(drawer==8){
+    mathy(drawingHoles8.xpos,drawingHoles8.ypos);
   }
-//  console.log("i=" + i);
+  fill("#B1FFA4");
+  lineColor.setAlpha(opacity);
+  rect(10,550,200,100); // on and off toggle button
+  stroke(lineColor); // setting the stroke to the color that is clicked on
+  if(opacity==255){
+    linePoints[i] = createVector(actX,actY); // drawing the line
+    if(i>0){
+      for(let j =1; j<linePoints.length-1; j++){
+        line(linePoints[j].x,linePoints[j].y,linePoints[j+1].x,linePoints[j+1].y);
+      }
+    }
   i += 1;
-
+  }
 }
 
 
 function mousePressed(){
   console.log(mouseX,mouseY); // position checker
-  console.log(spinner);
+  //checking to see if the mouse is selecting a color
+  clicker(10,70,color(0,0,0)); //shades
+  clicker(60,70,color(85,85,85));
+  clicker(110,70,color(170,170,170));
+  clicker(160,70,color(255,255,255));
+  clicker(10,120,color(38,35,120)); // blue
+  clicker(60,120,color(54,50,171));
+  clicker(110,120,color(66,61,209));
+  clicker(160,120,color(149,146,257));
+  clicker(10,170,color(89,30,122)); // purple
+  clicker(60,170,color(128,43,171));
+  clicker(110,170,color(152,52,209));
+  clicker(160,170,color(207,136,247));
+  clicker(10,220,(color(122,18,87))); // magenta
+  clicker(60,220,color(171,26,122));
+  clicker(110,220,color(209,31,150));
+  clicker(160,220,color(247,111,202));
+  clicker(10,270,color(110,14,3)); // red
+  clicker(60,270,color(158,20,5));
+  clicker(110,270,color(255,0,7));
+  clicker(160,270,color(235,70,76));
+  clicker(10,320,color(112,41,19)); // orange
+  clicker(60,320,color(158,57,27));
+  clicker(110,320,color(255,93,43));
+  clicker(160,320,color(255,147,115));
+  clicker(10,370,color(112,97,19)); // yellow
+  clicker(60,370,color(158,136,27));
+  clicker(110,370,color(255,220,43));
+  clicker(160,370,color(238,229,182));
+  clicker(10,420,color(22,102,17)); // green
+  clicker(60,420,color(31,148,25));
+  clicker(110,420,color(52,245,42));
+  clicker(160,420,color(175,227,172));
+  clicker(10,470,color(21,102,76)); // blue-green / teal
+  clicker(60,470,color(31,148,111));
+  clicker(110,470,color(51,245,184));
+  clicker(160,470,color(182,227,213));
+  if((mouseX>10)&(mouseX<210)&(mouseY>550)&(mouseY<650)){
+    if(opacity == 0){
+      opacity = 255;
+    } else{
+      opacity = 0;
+    }
+  }
 
 }
 function mathy(x,y){ // this math is done to revers all of matrix transformations to find the x,y coordinates of any of the holes
@@ -116,7 +190,7 @@ function colorSquare(x,y,color){
   fill(color);
   rect(x,y,50,50);
 }
-function colorsPick(){
+function colorsPallete(){
   noFill();
   strokeWeight(1);
   stroke(0);
@@ -169,4 +243,10 @@ function colorsPick(){
   colorSquare(60,470,"#1F946F");
   colorSquare(110,470,"#33F5B8");
   colorSquare(160,470,"#B6E3D5");
+}
+function clicker(lowX,lowY,color){
+  if((mouseX>lowX)&(mouseX<(lowX+50))&(mouseY>lowY)&(mouseY<(lowY+50))){
+    lineColor = color;
+  }
+
 }
