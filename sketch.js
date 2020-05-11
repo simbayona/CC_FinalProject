@@ -1,3 +1,9 @@
+// What is still missing (in order of simple to difficult i think)
+// Allowing for multiple colors
+// Allowing for separate line
+// Different Innershapes
+// Different Outer Shapes
+
 let spinner = 0;
 let rotator = 0;
 let actX = 0;
@@ -15,7 +21,7 @@ let opacity = 0;
 
 function setup(){
   lineColor =   color(0,0,0);
-  createCanvas(1100,700);
+  createCanvas(1100,650);
   background(127);
   angleMode(DEGREES);
   outerBorder = new Outer(); // creating the outerborder
@@ -42,10 +48,10 @@ function setup(){
   sliderInner = createSlider(0,3,1,.1); // sliders for the size of the part that spins, the size of the outerborder and which of the 9 holes to choose from
   sliderInner.position(905,125);
   sliderInner.style('width',"100px");
-  sliderOuter = createSlider(.5,1.5,1,.1);
+  sliderOuter = createSlider(.5,1.4,.9,.1);
   sliderOuter.position(905,325);
   sliderOuter.style('width',"100px");
-  sliderSelector = createSlider(0,8,6,1);
+  sliderSelector = createSlider(0,8,4,1);
   sliderSelector.position(905,525);
   sliderSelector.style("width","100px")
 }
@@ -90,7 +96,7 @@ function draw(){
   holeSelector(drawer); // this function  chooses which whole and highlights it briefly
   fill("#B1FFA4");
   lineColor.setAlpha(opacity); // this changes the opacity of the line so that it won't show up all the time
-  rect(10,550,200,100); // on and off toggle button
+  rect(10,540,200,100); // on and off toggle button
   stroke(lineColor); // setting the stroke to the color that is clicked on
   if(opacity==255){ // this is to make sure the line is only drawn when it should be visible
     linePoints[i] = createVector(actX,actY); // drawing the line by taking an array of the actual x and y coordinates produced by holeSelector()
@@ -104,6 +110,13 @@ function draw(){
   // all the text
   fill(0);
   noStroke();
+  textSize(12);
+  text("Smallest",905,160);
+  text("Largest",1005,160);
+  text("Smallest",905,360);
+  text("Largest",1005,360);
+  text("Center Hole",905,560);
+  text("Outer Holes",1005,560);
   textSize(32);
   textAlign(CENTER);
   text("Inner Size",855,90,210,50);
@@ -113,10 +126,10 @@ function draw(){
   text("The Digital Spirograph",350,0,400,40);
   text("Colors",10,10,200,50);
   if(opacity==0){ // using the opacity to swap which text is shown
-    text("Start",10,550,200,100);
+    text("Start",10,540,200,100);
   }
   if(opacity==255){
-    text("Stop",10,550,200,100);
+    text("Stop",10,540,200,100);
   }
 }
 
