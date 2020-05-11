@@ -3,12 +3,20 @@ class Holes{
   contructor(){
 
   }
-  display(x,y){
-    fill(127);
+  display(x,y,color){
+    fill(color);
     // fill(this.color);
     ellipse(x,y,this.size,this.size);
+    this.xpos = x;
+    this.ypos = y;
+
   }
-  resize(new_size){ // this method will let changing the size of the innercirlce much easier
+  draw(color){
+  push();
+  this.display(this.xpos,this.ypos,color);
+  pop();
+  }
+  resize(new_size){
     this.size = new_size;
   }
 

@@ -41,6 +41,7 @@ class Inner{
     drawingHoles7.display(0,-20);
     drawingHoles8.display(8,-22);
     pop();
+
   }
   circleInner(){
     this.placement();
@@ -48,18 +49,6 @@ class Inner{
     translate(width/2,height/2);
     fill("#B1FFA4");
     ellipse(this.x,this.y,this.outerWidth,this.outerHeight);
-    translate(this.x,this.y);
-    rotate(spinner);
-    scale(this.size);
-    drawingHoles0.display(0,0);
-    drawingHoles1.display(4,4);
-    drawingHoles2.display(-1,8);
-    drawingHoles3.display(-6,6);
-    drawingHoles4.display(-10,0);
-    drawingHoles5.display(-9,-9);
-    drawingHoles6.display(-5,-15);
-    drawingHoles7.display(0,-20);
-    drawingHoles8.display(8,-22);
     pop();
   }
 }
