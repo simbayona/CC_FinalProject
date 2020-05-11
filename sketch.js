@@ -110,6 +110,8 @@ function draw(){
   text("Border Size",855,290,210,50);
   text("Hole Select",855,490,210,50);
   textAlign(CENTER,CENTER);
+  text("The Digital Spirograph",350,0,400,40);
+  text("Colors",10,10,200,50);
   if(opacity==0){ // using the opacity to swap which text is shown
     text("Start",10,550,200,100);
   }
